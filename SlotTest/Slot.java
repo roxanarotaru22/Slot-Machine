@@ -152,7 +152,7 @@ public class Slot<g> {
 		  
 		   }
 		   //document.write("<img src=\""+img[ran]+"\">");
-	   
+	   thrt
 	   }
 	
 	
