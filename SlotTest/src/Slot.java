@@ -4,6 +4,8 @@ import org.eclipse.swt.widgets.Button;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
@@ -19,9 +21,16 @@ public class Slot<g> {
 	private Text punti;
 	private ArrayList<Image> img = new ArrayList<Image>();
 
-	
+	Label lblNewLabel;
+	Label lblNewLabel_1;
+	Label lblNewLabel_2;
+	int r;
+	int r1;
+	int r2;
+
 	/**
 	 * Launch the application.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -50,116 +59,119 @@ public class Slot<g> {
 
 	/**
 	 * Create contents of the window.
-	 * @param s 
+	 * 
+	 * @param s
 	 */
 	protected void createContents(Object s) {
 		shell = new Shell();
-		shell.setSize(450, 300);
+		shell.setSize(563, 506);
 		shell.setText("SWT Application");
-		img.add(new Image(display,"arancia.png"));
-		img.add(new Image(display,"ciliegia.png"));
-		img.add(new Image(display,"prugna.png"));
-		
+		img.add(new Image(display, "arancia.png"));
+		img.add(new Image(display, "ciliegia.png"));
+		img.add(new Image(display, "prugna.png"));
+
 		punti = new Text(shell, SWT.BORDER);
-		punti.setBounds(10, 202, 104, 21); 
-		
-		Label lblNewLabel = new Label(shell, SWT.NONE);
+		punti.setBounds(172, 417, 104, 21);
+
+		lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setImage(SWTResourceManager.getImage(Slot.class, "/img/arancia.png"));
-		//lblNewLabel.setSize(50,50);
-		
-		
-		
-		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
+		// lblNewLabel.setSize(50,50);
+
+		lblNewLabel_1 = new Label(shell, SWT.NONE);
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(Slot.class, "/img/ciliegia.png"));
-		
-		
-		
-		Label lblNewLabel_2 = new Label(shell, SWT.NONE);
+
+		lblNewLabel_2 = new Label(shell, SWT.NONE);
 		lblNewLabel_2.setBackground(SWTResourceManager.getColor(240, 240, 240));
 		lblNewLabel_2.setImage(SWTResourceManager.getImage(Slot.class, "/img/prugna.png"));
-		
-		
-		
+
 		Button btnStart = new Button(shell, SWT.NONE);
+		btnStart.setImage(SWTResourceManager.getImage(Slot.class, "/img/start.jpg"));
 		btnStart.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//Slot s=new Slot();
+				// Slot s=new Slot();
 				display = Display.getDefault();
-				Genera(display, new Label[]{lblNewLabel, lblNewLabel_1, lblNewLabel_2}, img);
-				/*if(lblNewLabel.equals(lblNewLabel_1) || )
-				if(img.equals(img1) || img.equals(img2)|| img1.equals(img2) ){
-					System.out.println("ciao");
-					punti.setText("100");
-				}
-				*/
-				
-			
-					  
-				   }
+				Genera();
+				/*
+				 * if(lblNewLabel.equals(lblNewLabel_1) || ) if(img.equals(img1)
+				 * || img.equals(img2)|| img1.equals(img2) ){
+				 * System.out.println("ciao"); punti.setText("100"); }
+				 */
+
+				Timer timer = new Timer();
+
+				// Schedule to run after every 3 second(3000 millisecond)
+				timer.scheduleAtFixedRate(new Task(), 30, 30);
+
+			}
 		});
-		btnStart.setBounds(10, 171, 75, 25);
-		btnStart.setText("START");
-		
-		lblNewLabel_2.setBounds(131, 0, 115, 117);
-		lblNewLabel.setBounds(10, 0, 115, 117);
-		lblNewLabel_1.setBounds(252, 0, 115, 117);
+		btnStart.setBounds(10, 363, 87, 75);
+
+		lblNewLabel_2.setBounds(131, 140, 115, 117);
+		lblNewLabel.setBounds(0, 140, 115, 117);
+		lblNewLabel_1.setBounds(268, 140, 115, 117);
 	}
 
-	/*public void Confronta(){
-		if(img.equals(img) && img.equals(img)&& img.equals(img) ){
-			System.out.println("ciao");
-			punti.setText("100");
-		}
-	}*/
-	public void Genera(Display display, Label [] l, ArrayList<Image> img) {
-		  /* var img = new Array("arancia.png","ciliegia.png","prugna.png");
-		   var x = Math.floor(img.lenght*Math.random(3));*/
-		   //document.write('<img src =\"'+img[x]+'\"alt=\"Non disponibile\">')
-		   int r;
-		   int r1;
-		   int r2;
-		   int p=0;
-			 int p1=0;
-		   Random ran = new Random();
-		   r = ran.nextInt(3);
-		   l[0].setImage(img.get(r));
-		   r1 = ran.nextInt(3);
-		   l[1].setImage(img.get(r1));
-		   r2 = ran.nextInt(3);
-		   l[2].setImage(img.get(r2));
-		 
-		   if(r == r1 || r == r2 || r1 == r2)
-		   {
-				
-				
-			   p=50+p;
-			   
-			  
-			  punti.setText(String.valueOf(p));
-			 // System.out.println(p);
-				  if(r1==r2 && r==r1 && r==r2){
-						 
+	class Task extends TimerTask {
+
+		int count = 1;
+
+		public void run() {
+
+			// richiama il metodo per la grafica sul thread principale
+			Display.getDefault().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
 					
-					  p1=100+p1;
-					 // System.out.println(p);
-					  
-				  }
-				  int p3;
-				   p3=p+p1;
-				   System.out.println("totale: "+p3);
-		   }
-		  
-		   }
-		   //document.write("<img src=\""+img[ran]+"\">");
-	public void Totale(){
-		
-		int p3;
-		   p3=p+p1;
-		   System.out.println("totale: "+p3);
-	}
-		   
-	   }
-	
-	
+					// TODO Auto-generated method stub
+					Genera();
+				}
 
+			});
+			int t1=0;
+			// Codice dello sleep
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+
+			}
+			count++;
+			if (count == 10) {
+				this.cancel();
+				if (r == r1 || r == r2 || r1 == r2) {
+					int f = 50;
+					System.out.println(f);
+
+					if (r == r1 && r == r2 && r1 == r2) {
+						int i = 100;
+						System.out.println(i);
+
+						int t = 0;
+						t = f + i;
+						t1=t;
+						System.out.println(t);
+						
+					}
+				}
+			}
+			
+		}
+
+	}
+
+	public void Genera() {
+
+		Label[] l = new Label[] { lblNewLabel, lblNewLabel_1, lblNewLabel_2 };
+
+		Random ran = new Random();
+		r = ran.nextInt(3);
+		l[0].setImage(img.get(r));
+		r1 = ran.nextInt(3);
+		l[1].setImage(img.get(r1));
+		r2 = ran.nextInt(3);
+		l[2].setImage(img.get(r2));
+
+	}
+
+}
