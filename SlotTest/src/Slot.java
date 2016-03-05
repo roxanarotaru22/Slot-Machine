@@ -64,7 +64,7 @@ public class Slot<g> {
 	 */
 	protected void createContents(Object s) {
 		shell = new Shell();
-		shell.setSize(563, 506);
+		shell.setSize(417, 510);
 		shell.setText("SWT Application");
 		img.add(new Image(display, "arancia.png"));
 		img.add(new Image(display, "ciliegia.png"));
@@ -110,6 +110,14 @@ public class Slot<g> {
 		lblNewLabel_2.setBounds(131, 140, 115, 117);
 		lblNewLabel.setBounds(0, 140, 115, 117);
 		lblNewLabel_1.setBounds(268, 140, 115, 117);
+		
+		Label lblNewLabel_3 = new Label(shell, SWT.NONE);
+		lblNewLabel_3.setImage(SWTResourceManager.getImage(Slot.class, "/img/slot1.png"));
+		lblNewLabel_3.setBounds(0, 0, 547, 117);
+		
+		Button btnNewButton = new Button(shell, SWT.NONE);
+		btnNewButton.setImage(SWTResourceManager.getImage(Slot.class, "/img/reset.png"));
+		btnNewButton.setBounds(294, 378, 52, 55);
 	}
 
 	class Task extends TimerTask {
@@ -173,5 +181,4 @@ public class Slot<g> {
 		l[2].setImage(img.get(r2));
 
 	}
-
 }
