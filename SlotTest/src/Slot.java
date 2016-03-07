@@ -27,7 +27,8 @@ public class Slot<g> {
 	int r;
 	int r1;
 	int r2;
-
+	int t;
+	int t1;
 	/**
 	 * Launch the application.
 	 * 
@@ -64,6 +65,7 @@ public class Slot<g> {
 	 */
 	protected void createContents(Object s) {
 		shell = new Shell();
+		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		shell.setSize(417, 510);
 		shell.setText("SWT Application");
 		img.add(new Image(display, "arancia.png"));
@@ -71,7 +73,8 @@ public class Slot<g> {
 		img.add(new Image(display, "prugna.png"));
 
 		punti = new Text(shell, SWT.BORDER);
-		punti.setBounds(172, 417, 104, 21);
+		punti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+		punti.setBounds(103, 401, 185, 37);
 
 		lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setImage(SWTResourceManager.getImage(Slot.class, "/img/arancia.png"));
@@ -92,6 +95,8 @@ public class Slot<g> {
 				// Slot s=new Slot();
 				display = Display.getDefault();
 				Genera();
+				punti.setText(""+ t1);
+				
 				/*
 				 * if(lblNewLabel.equals(lblNewLabel_1) || ) if(img.equals(img1)
 				 * || img.equals(img2)|| img1.equals(img2) ){
@@ -107,9 +112,9 @@ public class Slot<g> {
 		});
 		btnStart.setBounds(10, 363, 87, 75);
 
-		lblNewLabel_2.setBounds(131, 140, 115, 117);
-		lblNewLabel.setBounds(0, 140, 115, 117);
-		lblNewLabel_1.setBounds(268, 140, 115, 117);
+		lblNewLabel_2.setBounds(141, 140, 115, 117);
+		lblNewLabel.setBounds(10, 140, 123, 117);
+		lblNewLabel_1.setBounds(268, 140, 123, 117);
 		
 		Label lblNewLabel_3 = new Label(shell, SWT.NONE);
 		lblNewLabel_3.setImage(SWTResourceManager.getImage(Slot.class, "/img/slot1.png"));
@@ -117,7 +122,7 @@ public class Slot<g> {
 		
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.setImage(SWTResourceManager.getImage(Slot.class, "/img/reset.png"));
-		btnNewButton.setBounds(294, 378, 52, 55);
+		btnNewButton.setBounds(294, 363, 75, 75);
 	}
 
 	class Task extends TimerTask {
@@ -137,7 +142,7 @@ public class Slot<g> {
 				}
 
 			});
-			int t1=0;
+			
 			// Codice dello sleep
 			try {
 				Thread.sleep(100);
@@ -145,23 +150,20 @@ public class Slot<g> {
 
 			}
 			count++;
-			if (count == 10) {
+			if (count == 8) {
 				this.cancel();
 				if (r == r1 || r == r2 || r1 == r2) {
-					int f = 50;
-					System.out.println(f);
+					 t = 50;
+					System.out.println(t);
 
 					if (r == r1 && r == r2 && r1 == r2) {
-						int i = 100;
-						System.out.println(i);
-
-						int t = 0;
-						t = f + i;
-						t1=t;
+					t = 100;
 						System.out.println(t);
+						t1=t+0;
 						
 					}
 				}
+				
 			}
 			
 		}
