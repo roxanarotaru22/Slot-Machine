@@ -88,7 +88,7 @@ public class Slot<g> {
 		lblNewLabel_2.setImage(SWTResourceManager.getImage(Slot.class, "/img/prugna.png"));
 
 		Button btnStart = new Button(shell, SWT.NONE);
-		btnStart.setImage(SWTResourceManager.getImage(Slot.class, "/img/start.jpg"));
+		btnStart.setImage(SWTResourceManager.getImage(Slot.class, "/img/start-here.png"));
 		btnStart.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -110,7 +110,7 @@ public class Slot<g> {
 
 			}
 		});
-		btnStart.setBounds(10, 363, 87, 75);
+		btnStart.setBounds(10, 358, 87, 85);
 
 		lblNewLabel_2.setBounds(141, 140, 115, 117);
 		lblNewLabel.setBounds(10, 140, 123, 117);
