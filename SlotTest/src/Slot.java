@@ -31,12 +31,14 @@ public class Slot<g> {
 	int r2;
 	int t;
 	int t1;
-	int points = 0;						//Variabile he tiene conto dei punti accumulati
-	int retry = 10;						//Indica il numero di riprova posseduti all'inizio di una partita
-	int retryremaining;					//variabile contenete i riprova rimanenti
-	int plays = 1;
+	int p = 0;						
+	int tentativi = 10;						
+	int rimasti;					
+	int giocatore = 1;
 	private Text Classifica;
-
+	private Text puntiTest;
+	int p1;
+	int p2;
 	/**
 	 * Launch the application.
 	 * 
@@ -73,7 +75,7 @@ public class Slot<g> {
 	 */
 	protected void createContents(Object s) {
 		
-		retryremaining = retry;					//imposto i retry disponibili quando il programma si avvia
+		rimasti = tentativi;					
 		
 		shell = new Shell();
 		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
@@ -84,7 +86,9 @@ public class Slot<g> {
 		img.add(new Image(display, "prugna.png"));
 
 		punti = new Text(shell, SWT.BORDER);
-		punti.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+		punti.setFont(SWTResourceManager.getFont("Showcard Gothic", 11, SWT.BOLD));
+		punti.setForeground(SWTResourceManager.getColor(255, 0, 0));
+		punti.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		punti.setBounds(103, 401, 185, 37);
 
 		lblNewLabel = new Label(shell, SWT.NONE);
@@ -98,21 +102,25 @@ public class Slot<g> {
 		lblNewLabel_2.setBackground(SWTResourceManager.getColor(240, 240, 240));
 		lblNewLabel_2.setImage(SWTResourceManager.getImage(Slot.class, "/img/prugna.png"));
 		
-		punti.setText("Riprova: "+ retryremaining);				//imposto il testo nella label all'inizio del gioco
-
+		punti.setText("Riprova: "+ rimasti);				
+		
+		
 		Button btnStart = new Button(shell, SWT.NONE);
-		btnStart.setImage(SWTResourceManager.getImage(Slot.class, "/img/start-here.png"));
+		btnStart.setImage(SWTResourceManager.getImage(Slot.class, "/img/start.jpg"));
 		btnStart.addSelectionListener(new SelectionAdapter() {
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Slot s=new Slot();
 				display = Display.getDefault();
+				
 				Genera();
-				retryremaining = retryremaining - 1;			//una volta premuto il pulsante, tolgo un riprova 
 				
-			    punti.setText("Riprova: "+ retryremaining); //se i riprova non sono terminati, scrivo quanti ne rimagono nella label
+				rimasti = rimasti - 1;			
 				
-				
+			    punti.setText("Tentativi: "+ rimasti); 
+
+			    
 				
 				/*
 				 * if(lblNewLabel.equals(lblNewLabel_1) || ) if(img.equals(img1)
@@ -144,21 +152,33 @@ public class Slot<g> {
 		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {					//PULSANTE RESET
-				points = 0;													//azzero i punti
-				retryremaining = retry;										//reimposto i riprova
-				punti.setText("Riprova: "+ retryremaining);					//aggiorno la label di testo con i riprova 
+			public void widgetSelected(SelectionEvent e) {					
+				p = 0;													
+				rimasti = tentativi;										
+				punti.setText("Tentativi: "+ rimasti);
 				}
 		});
 		btnNewButton.setImage(SWTResourceManager.getImage(Slot.class, "/img/reset.png"));
 		btnNewButton.setBounds(294, 363, 75, 75);
 		
 		Label lblClassificaTitle = new Label(shell, SWT.NONE);
+		lblClassificaTitle.setFont(SWTResourceManager.getFont("Showcard Gothic", 14, SWT.BOLD));
+		lblClassificaTitle.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		lblClassificaTitle.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
 		lblClassificaTitle.setBounds(10, 449, 123, 25);
 		lblClassificaTitle.setText("CLASSIFICA:");
 		
 		Classifica = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.WRAP |SWT.V_SCROLL);
-		Classifica.setBounds(10, 480, 381, 191);
+		Classifica.setFont(SWTResourceManager.getFont("Showcard Gothic", 12, SWT.BOLD));
+		Classifica.setForeground(SWTResourceManager.getColor(255, 255, 255));
+		Classifica.setBackground(SWTResourceManager.getColor(0, 0, 0));
+		Classifica.setBounds(10, 480, 359, 192);
+		
+		puntiTest = new Text(shell, SWT.BORDER);
+		puntiTest.setFont(SWTResourceManager.getFont("Showcard Gothic", 12, SWT.BOLD));
+		puntiTest.setForeground(SWTResourceManager.getColor(0, 0, 0));
+		puntiTest.setBackground(SWTResourceManager.getColor(255, 0, 0));
+		puntiTest.setBounds(103, 358, 185, 37);
 	}
 
 	class Task extends TimerTask {
@@ -167,7 +187,7 @@ public class Slot<g> {
 
 		public void run() {
 
-			// richiama il metodo per la grafica sul thread principale
+			
 			Display.getDefault().asyncExec(new Runnable() {
 
 				@Override
@@ -189,35 +209,33 @@ public class Slot<g> {
 			count++;
 			if (count == 8) {
 				this.cancel();
-				if (r == r1 || r == r2 || r1 == r2) {				//se ci sono 2 immagini uguali sommo 50 ai punti
-					 points = points + 50;
-					System.out.println(points);
-
-					if (r == r1 && r == r2 && r1 == r2) {			//inoltre se le 3 immagini sono identiche sommo altri 50 punti in modo che 50+50 = 100 punti
-						points = points + 50;
-						System.out.println(points);
-						
+				if (r == r1 || r == r2 || r1 == r2) {
+					p = p + 50;
+					System.out.println(p);
+					
+					if (r == r1 && r == r2 && r1 == r2) {	
+						p = p + 50;
+						System.out.println(p);
 					}
+					
 				}
 				
-				//METODO CHE PERMETTE DI AGGIORNARE LE INFORMAZIONE NELLA LABEL IN UN TIMER -> RICAVATO DA INTERNET: https://wiki.eclipse.org/FAQ_Why_do_I_get_an_invalid_thread_access_exception%3F
 				Display.getDefault().asyncExec(new Runnable() {
 		               public void run() {
-		            	   
-		            	   if (retryremaining <= 0){				    //se i riprova sono terminati, faccio vedere i punti fatti nella labe�
-		   					punti.setText("PUNTI: " + points);
-		   					retryremaining = retry;						//reimposto i riprova per una nuova sessione di gioco
-		   					Classifica.append("Giocata n�: " + plays + " - Punti: " + points + "\n");   //compilo la classifica una volta termitati i tentativi, appendendo il nuovo risultato al testo gia presente nella text-box
-		   					plays = plays + 1;							//aggiungo 1 alle giocate
-		   					points = 0;									//riazzero i punti
+
+		   				puntiTest.setText("Punti: " + p);
+		            	   if (rimasti <= 0){				    
+		   					punti.setText("PUNTI: " + p);
+		   					rimasti = tentativi;						
+		   					Classifica.append("Giocata numero: " + giocatore + " - Punti: " + p + "\n");  
+		   					giocatore = giocatore + 1;							
+		   					p = 0;									
 		   				}
 		   				
 		               }
 		            });
 			
 			}
-			
-			
 			
 		}
 
@@ -237,3 +255,17 @@ public class Slot<g> {
 
 	}
 }
+
+
+
+
+
+/*File soundFile=new File (POSIZIONE BRANO MP3);
+try{
+posizione=new MediaLocator (soundFile. ToURL ()); 
+lettore=Manager. CreatePlayer (posizione); 
+}catch (Exception e){ e. PrintStackTrace (); }
+
+lettore. Realize ();
+lettore. Prefetch ();
+lettore. Start ();*/
