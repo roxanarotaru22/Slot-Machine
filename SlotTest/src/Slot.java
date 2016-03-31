@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JPanel;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
@@ -16,6 +18,9 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.List;
 
 public class Slot<g> {
 	Display display = Display.getDefault();
@@ -39,6 +44,8 @@ public class Slot<g> {
 	private Text puntiTest;
 	int p1;
 	int p2;
+	private Text textpay;
+	private Text txtSoldiVeri;
 	/**
 	 * Launch the application.
 	 * 
@@ -87,9 +94,9 @@ public class Slot<g> {
 
 		punti = new Text(shell, SWT.BORDER);
 		punti.setFont(SWTResourceManager.getFont("Showcard Gothic", 11, SWT.BOLD));
-		punti.setForeground(SWTResourceManager.getColor(255, 0, 0));
+		punti.setForeground(SWTResourceManager.getColor(255, 255, 255));
 		punti.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		punti.setBounds(103, 401, 185, 37);
+		punti.setBounds(201, 521, 185, 37);
 
 		lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setImage(SWTResourceManager.getImage(Slot.class, "/img/arancia.png"));
@@ -102,11 +109,11 @@ public class Slot<g> {
 		lblNewLabel_2.setBackground(SWTResourceManager.getColor(240, 240, 240));
 		lblNewLabel_2.setImage(SWTResourceManager.getImage(Slot.class, "/img/prugna.png"));
 		
-		punti.setText("Riprova: "+ rimasti);				
+		punti.setText("BET: "+ rimasti);				
 		
 		
 		Button btnStart = new Button(shell, SWT.NONE);
-		btnStart.setImage(SWTResourceManager.getImage(Slot.class, "/img/start.jpg"));
+		btnStart.setImage(SWTResourceManager.getImage(Slot.class, "/img/startgiusto.jpg"));
 		btnStart.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
@@ -118,7 +125,7 @@ public class Slot<g> {
 				
 				rimasti = rimasti - 1;			
 				
-			    punti.setText("Tentativi: "+ rimasti); 
+			    punti.setText("BET: "+ rimasti); 
 
 			    
 				
@@ -139,9 +146,9 @@ public class Slot<g> {
 
 			}
 		});
-		btnStart.setBounds(10, 358, 87, 85);
+		btnStart.setBounds(10, 288, 87, 85);
 
-		lblNewLabel_2.setBounds(141, 140, 115, 117);
+		lblNewLabel_2.setBounds(139, 140, 123, 117);
 		lblNewLabel.setBounds(10, 140, 123, 117);
 		lblNewLabel_1.setBounds(268, 140, 123, 117);
 		
@@ -155,30 +162,80 @@ public class Slot<g> {
 			public void widgetSelected(SelectionEvent e) {					
 				p = 0;													
 				rimasti = tentativi;										
-				punti.setText("Tentativi: "+ rimasti);
+				punti.setText("BET: "+ rimasti);
 				}
 		});
-		btnNewButton.setImage(SWTResourceManager.getImage(Slot.class, "/img/reset.png"));
-		btnNewButton.setBounds(294, 363, 75, 75);
+		btnNewButton.setImage(SWTResourceManager.getImage(Slot.class, "/img/resetgiusto.jpg"));
+		btnNewButton.setBounds(289, 288, 75, 75);
 		
 		Label lblClassificaTitle = new Label(shell, SWT.NONE);
 		lblClassificaTitle.setFont(SWTResourceManager.getFont("Showcard Gothic", 14, SWT.BOLD));
 		lblClassificaTitle.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		lblClassificaTitle.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_FOREGROUND));
-		lblClassificaTitle.setBounds(10, 449, 123, 25);
+		lblClassificaTitle.setBounds(10, 367, 123, 25);
 		lblClassificaTitle.setText("CLASSIFICA:");
 		
 		Classifica = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.WRAP |SWT.V_SCROLL);
 		Classifica.setFont(SWTResourceManager.getFont("Showcard Gothic", 12, SWT.BOLD));
 		Classifica.setForeground(SWTResourceManager.getColor(255, 255, 255));
 		Classifica.setBackground(SWTResourceManager.getColor(0, 0, 0));
-		Classifica.setBounds(10, 480, 359, 192);
+		Classifica.setBounds(10, 398, 381, 117);
 		
 		puntiTest = new Text(shell, SWT.BORDER);
 		puntiTest.setFont(SWTResourceManager.getFont("Showcard Gothic", 12, SWT.BOLD));
-		puntiTest.setForeground(SWTResourceManager.getColor(0, 0, 0));
+		puntiTest.setForeground(SWTResourceManager.getColor(255, 255, 255));
 		puntiTest.setBackground(SWTResourceManager.getColor(255, 0, 0));
-		puntiTest.setBounds(103, 358, 185, 37);
+		puntiTest.setBounds(10, 521, 185, 37);
+		puntiTest.setText("PUNTI: ");
+		
+		Label label = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
+		label.setBounds(0, 134, 4, 133);
+		
+		Label label_1 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label_1.setBounds(0, 130, 401, 4);
+		
+		Label label_2 = new Label(shell, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label_2.setBounds(0, 263, 401, 4);
+		
+		Label label_3 = new Label(shell, SWT.SEPARATOR | SWT.VERTICAL);
+		label_3.setBounds(397, 131, 4, 133);
+		
+		Button btnNewButton_1 = new Button(shell, SWT.NONE);
+		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				textpay.append("0 figure uguali: 0 "  + "\n" +" 2 figure uguali: 50" + "\n"+ "3 figure uguali: 100" + "\n");  
+			
+				
+			}
+		});
+		btnNewButton_1.setImage(SWTResourceManager.getImage(Slot.class, "/img/pay table.jpg"));
+		btnNewButton_1.setFont(SWTResourceManager.getFont("Showcard Gothic", 13, SWT.NORMAL));
+		btnNewButton_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		btnNewButton_1.setBounds(139, 287, 87, 80);
+		
+		textpay = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.WRAP |SWT.V_SCROLL);
+		textpay.setFont(SWTResourceManager.getFont("Showcard Gothic", 12, SWT.NORMAL));
+		textpay.setForeground(SWTResourceManager.getColor(255, 255, 255));
+		textpay.setBackground(SWTResourceManager.getColor(255, 0, 0));
+		textpay.setBounds(10, 564, 376, 105);
+		
+		txtSoldiVeri = new Text(shell, SWT.NONE);
+		txtSoldiVeri.setForeground(SWTResourceManager.getColor(255, 255, 0));
+		txtSoldiVeri.setFont(SWTResourceManager.getFont("Segoe Script", 14, SWT.BOLD));
+		txtSoldiVeri.setBackground(SWTResourceManager.getColor(0, 0, 0));
+		txtSoldiVeri.setText("Soldi veri!!!!");
+		txtSoldiVeri.setBounds(128, 687, 148, 41);
+		
+		Label lblNewLabel_4 = new Label(shell, SWT.NONE);
+		lblNewLabel_4.setBackground(SWTResourceManager.getColor(0, 0, 0));
+		lblNewLabel_4.setImage(SWTResourceManager.getImage(Slot.class, "/img/soldi.png"));
+		lblNewLabel_4.setBounds(10, 675, 112, 53);
+		
+		Label label_4 = new Label(shell, SWT.NONE);
+		label_4.setBackground(SWTResourceManager.getColor(0, 0, 0));
+		label_4.setImage(SWTResourceManager.getImage(Slot.class, "/img/soldi.png"));
+		label_4.setBounds(274, 675, 112, 53);
 	}
 
 	class Task extends TimerTask {
@@ -229,7 +286,8 @@ public class Slot<g> {
 		   					rimasti = tentativi;						
 		   					Classifica.append("Giocata numero: " + giocatore + " - Punti: " + p + "\n");  
 		   					giocatore = giocatore + 1;							
-		   					p = 0;									
+		   					p = 0;	
+		   					
 		   				}
 		   				
 		               }
